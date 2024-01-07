@@ -1,0 +1,81 @@
+extends ../layout
+block head
+    link(rel='stylesheet' type='text/css' href='/record.css')
+block content
+    h1 인바디 결과 등록
+
+    form#form-record-add(onsubmit="register(event)")
+        label(for='input1') 검사일시
+        input#input1(type='date' name='d' required)
+        label(for='input2') 인바디점수
+        input#input2(type='number' name='score' required)
+        label(for='input3') 체중(kg)
+        input#input3(type='number' name='weight' required step="0.01")
+        label(for='input4') 골격근량(kg)
+        input#input4(type='number' name='muscleMass' required step="0.01")
+        label(for='input5') 체지방량(kg)
+        input#input5(type='number' name='fatMass' required step="0.01")
+        label(for='input6') BMI(kg/m2)
+        input#input6(type='number' name='bmi' required step="0.01")
+        label(for='input7') 체지방률(%)
+        input#input7(type='number' name='fatPercent' required step="0.01")
+        label(for='input8') 체수분(L)
+        input#input8(type='number' name='water' required step="0.01")
+        label(for='input9') 단백질(kg)
+        input#input9(type='number' name='protein' required step="0.01")
+        label(for='input10') 무기질(%)
+        input#input10(type='number' name='mineral' required step="0.01")
+        label(for='input11') 복부지방률(%)
+        input#input11(type='number' name='waistHipRatio' required step="0.01")
+        label(for='input12') 내장지방레벨
+        input#input12(type='number' name='visceralFatLevel' required step="0.01")
+        label(for='input13') 제지방량(kg)
+        input#input13(type='number' name='leanBodyMass' required step="0.01")
+        label(for='input14') 기초대사량(kcal)
+        input#input14(type='number' name='basalMetabolicRate' required step="0.01")
+        label 비만도(%)
+        input(type='number' name='obesity' required step="0.01")
+        
+        button.mainbtn(type='submit') 등록
+
+    script.
+        const $inputs = document.querySelectorAll('input')
+
+        function register(e) {
+            e.preventDefault()
+
+            const payload = {}
+            for (const $input of $inputs) {
+                if ($input.type==='number')
+                payload[$input.name] = Number($input.value)
+                else payload[$input.name] = $input.value
+            }
+
+            console.log('payload: ', payload)
+            const jwt = localStorage.getItem('t')
+
+            fetch('/api/record/register', {
+                method: 'POST',
+                headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${jwt}`
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(res => {
+                console.log('res : ', res)
+                if (res.error) {
+                    return
+                }
+
+                alert('등록이 완료되었습니다.')
+                clearInput()
+            })
+        }
+
+        function clearInput() {
+            for (const $input of $inputs) {
+                $input.value=''
+            }
+        }

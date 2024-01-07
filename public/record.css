@@ -1,0 +1,12 @@
+#form-record-add {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+#form-record-add > input {
+  margin-bottom: 20px;
+}
+
+canvas {
+  margin-bottom: 50px;
+}

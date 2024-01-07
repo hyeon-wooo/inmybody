@@ -1,0 +1,155 @@
+extends ../layout
+block head
+    link(rel='stylesheet' type='text/css' href='/record.css')
+block content
+    h1 나의 인바디 변화
+
+    .canvas-container
+
+        h3 인바디점수
+        canvas#chart-score
+
+        h3 체중(kg)
+        canvas#chart-weight
+
+        h3 골격근량(kg)
+        canvas#chart-muscleMass
+
+        h3 체지방량(kg)
+        canvas#chart-fatMass
+
+        h3 BMI(kg/m2)
+        canvas#chart-bmi
+
+        h3 체지방률(kg)
+        canvas#chart-fatPercent
+
+        h3 체수분(L)
+        canvas#chart-water
+
+        h3 단백질(kg)
+        canvas#chart-protein
+
+        h3 무기질(kg)
+        canvas#chart-mineral 
+
+        h3 복부지방률
+        canvas#chart-waistHipRatio
+
+        h3 내장지방레벨
+        canvas#chart-visceralFatLevel
+
+        h3 제지방량(kg)
+        canvas#chart-leanBodyMass
+
+        h3 기초대사량
+        canvas#chart-basalMetabolicRate
+
+        h3 비만도(%)
+        canvas#chart-obesity
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    script.
+        const jwt = localStorage.getItem('t')
+        const ctx = document.getElementById('myChart');
+        let charts = {}
+
+        const dotColors = {
+            score: '#000077',
+            weight: '#11EE99',
+            muscleMass: '#D948D5',
+            fatMass: '#FCCB3D',
+            bmi: '#80D98E',
+            fatPrecent: '#DBBA95',
+            water: '#8FD9CB',
+            protein: '#FCEA53',
+            mineral: '#F05C88',
+            waistHipRatio: '#7CA7D9',
+            visceralFatLevel: '#92FC3D',
+            leanBodyMass: '#1CCCFF',
+            basalMetabolicRate: '#FF0000',
+            obesity: '#C793D9'
+        }
+
+
+        async function fetchData() {
+            const res = await fetch('/api/record/mine', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${jwt}`
+                }    
+            })
+            .then(res => res.json())
+            .catch(e => {
+                console.log('error: ', e)
+            })
+
+            return res.list
+        }
+
+        function bindData(list) {
+            console.log('list: ', list)
+
+            const dates = []
+            // Record<keyof RecordEntity, {x: string, y: number}[]>
+            const datasets = {}
+            list.forEach(record => {
+                const entries = Object.entries(record)
+                const date = getStrDate(record.d)
+                dates.push(date)
+                entries.forEach(([k, v]) => {
+                    if (k==='d') return
+                    if (!datasets[k]) datasets[k] = []
+                    datasets[k].push({x: date, y: v})
+                })
+            })
+
+            const entries = Object.entries(datasets)
+            console.log(datasets)
+            entries.forEach(entry => {
+                const [colName, dataset] = entry
+                if (!charts[colName]) {
+                    const ctx = document.getElementById(`chart-${colName}`);
+                    if (!ctx) return
+
+                    charts[colName] = 
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                            // labels: dates,
+                            datasets: [{
+                                data: dataset,
+                                borderColor: '#666',
+                                backgroundColor: dotColors[colName],
+                            }]
+                            },
+                            options: {
+                                scales: {
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    },
+                                }
+                            }
+                        });
+                }
+            })
+
+        }
+
+        function getStrDate(origin) {
+            const date = new Date(origin)
+            const y =date.getFullYear()
+            const m = (date.getMonth()+1+'').padStart(2, '0')
+            const d = (date.getDate()+'').padStart(2, '0')
+            return `${y}-${m}-${d}`
+        }
+
+        function init() {
+            
+            fetchData().then(bindData)
+        }
+        init()
+        
+    

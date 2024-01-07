@@ -1,0 +1,66 @@
+extends ../layout
+block head
+    link(rel='stylesheet' type='text/css' href='sign.css')
+block content
+    h1 로그인
+    form#form-signin.flex-col-center
+        input(type='email' placeholder='이메일' name='email' required) 
+        input(type='password' placeholder='패스워드' name='password' required minlength='8')
+        button(type='submit' style="margin-bottom: 10px;") 로그인
+        button(onclick='location.href="/signup"') 회원가입
+
+    script.
+        const $form = document.querySelector('#form-signin');
+        const $inputs = document.querySelectorAll('input')
+        const $inputEmail = $inputs[0]
+        const $inputPassword = $inputs[1]
+
+        $form.addEventListener('submit', onSubmit);
+
+        function onSubmit(e) {
+            console.log('#1')
+            e.preventDefault()
+            
+            const email = $inputEmail.value
+            const password = $inputPassword.value
+
+            if (!validatePw($inputPassword.value)) {
+                alert("비밀번호는 알파벳, 숫자, !, @, _, . 만 포함합니다.")
+                return
+                }
+
+            fetch('/api/user/signin', {
+                method: 'POST',
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify({email, password})
+            })
+            .then(res => res.json())
+            .then(res => {
+                console.log('res: ', res)
+                if (res.error) {
+                    alert(res.message)
+                    return
+                    }
+                if (res.token) {
+                    localStorage.setItem('t', res.token)
+                    location.href='/'
+                }
+            })
+            .catch(e => {
+                console.log('error: ', e)
+            })
+        }
+
+        function validatePw(pw) {
+            for (const letter of pw) {
+                if (
+                    (letter >= 'a' && letter <= 'z') || (letter >= 'A' && letter <= 'Z') || (letter >= '0' && letter <= '9')
+                    || ['!','@','_','.'].includes(letter)
+                ) continue
+                else return false
+            }
+
+            return true
+        }

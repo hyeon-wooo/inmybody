@@ -1,0 +1,22 @@
+form {
+  width: 70%;
+  max-width: 400px;
+  border: 1px solid #aeaeae;
+  border-radius: 7px;
+  padding: 10px;
+}
+
+form > input {
+  width: 80%;
+}
+
+form > button {
+  width: 100px;
+  padding: 10px;
+  outline: none;
+  border: none;
+  border-radius: 7px;
+  font-size: 1.1rem;
+  color: #444;
+  background-color: #7cd9a5;
+}

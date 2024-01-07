@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    
+    h1 반갑습니다!
+
+    .mainbtn-container
+        button.flex-col-center(onclick="location.href='/record/register'") 인바디 결과 등록
+        button.flex-col-center(onclick="location.href='/record/graph'") 인바디 통계 확인
+    
+
+    script.
+        const jwt = localStorage.getItem('t')
+        if (!jwt) location.href='/signin'
