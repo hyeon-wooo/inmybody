@@ -2,13 +2,43 @@ extends layout
 
 block content
     
-    h1 반갑습니다!
+    include components/logo
+    .introduce
+        
+    .main-login-container
+        a(href='/signin')
+            span 로그인
 
     .mainbtn-container
-        button.flex-col-center(onclick="location.href='/record/register'") 인바디 결과 등록
-        button.flex-col-center(onclick="location.href='/record/graph'") 인바디 통계 확인
+        button.flex-col-center(onclick="linkToRegister()") 인바디 결과 등록
+        button.flex-col-center(onclick="linkToGraph()") 인바디 통계 확인
     
 
     script.
         const jwt = localStorage.getItem('t')
-        if (!jwt) location.href='/signin'
+        if (!jwt) showLoginBtn()
+
+        function showLoginBtn() {
+            const $loginContainer = document.querySelector('.main-login-container')
+            $loginContainer.classList.add('main-login-container-visible')
+        }
+
+        function linkToRegister() {
+            if (!jwt) {
+                alert('로그인 후 이용해 주세요.')
+                location.href='/signin'    
+                return
+            }
+
+            location.href='/record/register'
+        }
+
+        function linkToGraph() {
+            if (!jwt) {
+                alert('로그인 후 이용해 주세요.')
+                location.href='/signin'    
+                return
+            }
+            
+            location.href='/record/graph'
+        }

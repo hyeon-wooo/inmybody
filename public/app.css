@@ -1,9 +1,20 @@
+/* 세종병원체 */
+@font-face {
+  font-family: 'SejonghospitalBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/SejonghospitalBold.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
 :root {
   --orange: #ff9221;
+  --blue1: #3489eb;
 }
 
 * {
   box-sizing: border-box;
+  font-family: 'SejonghospitalBold';
 }
 
 html {
@@ -16,6 +27,18 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
+#root {
+  width: 100%;
+  max-width: 560px;
+  height: 100%;
+  overflow: auto;
 }
 
 label {
@@ -36,6 +59,16 @@ select {
   margin-bottom: 10px;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
 .flex-row-center {
   display: flex;
   justify-content: center;
@@ -46,6 +79,25 @@ select {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.logo-container {
+  width: 100%;
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+.logo-container span {
+  color: var(--blue1);
+  font-size: 2.5rem;
+}
+.logo-container .logo-my {
+  color: #666;
+  margin: 0 5px;
+}
+
+.introduce {
+  padding: 20px 16px;
 }
 
 .mainbtn-container {
@@ -60,13 +112,13 @@ select {
   flex: 1;
   aspect-ratio: 1;
   background-color: var(--orange);
-  color: #333;
+  color: #222;
   outline: none;
   border: none;
   border-radius: 7px;
   font-size: 1.4rem;
   text-align: center;
-  box-shadow: 3px 5px 6px 0px #999;
+  box-shadow: 3px 5px 6px 0px #bbb;
 }
 
 .mainbtn-container > button:first-child {
@@ -87,4 +139,23 @@ select {
   align-items: center;
   outline: none;
   border: none;
+}
+
+.main-login-container {
+  display: none;
+  justify-content: flex-end;
+  padding: 0 16px;
+  margin-bottom: 20px;
+}
+.main-login-container-visible {
+  display: flex;
+}
+
+.main-login-container > a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-size: 1.3rem;
 }

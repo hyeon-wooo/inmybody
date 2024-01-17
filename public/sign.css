@@ -1,9 +1,14 @@
+.sign-form-label {
+  margin: 10px 16px;
+  color: #333;
+}
+
 form {
-  width: 70%;
-  max-width: 400px;
+  width: calc(100% - 32px);
   border: 1px solid #aeaeae;
   border-radius: 7px;
   padding: 10px;
+  margin: 0 16px;
 }
 
 form > input {
