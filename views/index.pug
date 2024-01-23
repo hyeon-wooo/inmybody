@@ -3,17 +3,18 @@ extends layout
 block content
     
     include components/logo
-    .introduce
-        
-    .main-login-container
-        a(href='/signin')
-            span 로그인
+    main
+        .introduce
+            
+        .main-login-container
+            a(href='/signin')
+                span 로그인
 
-    main(style="padding-bottom: 30px;")
+    
         .mainbtn-container
             button.flex-col-center(onclick="linkToRegister()") 
                 img.mainbtn-img(src='/assets/resume.png')
-                p 인바디 결과 등록
+                p 인바디 결과 기록
             button.flex-col-center(onclick="linkToGraph()") 
                 img.mainbtn-img(src='/assets/graph.png')
                 p 나의 인바디 변화
@@ -50,7 +51,7 @@ block content
             else
                 .notice-no-content 새소식이 없습니다
 
-    include components/footer
+        include components/footer
 
     script.
         const jwt = localStorage.getItem('t')

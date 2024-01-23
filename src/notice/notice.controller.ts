@@ -23,6 +23,14 @@ export class NoticeController {
     };
   }
 
+  @Get('create')
+  @Render('notice/create')
+  async create() {
+    return {
+      headerTitle: '공지사항 등록',
+    };
+  }
+
   @Get('/:id')
   @Render('notice/detail')
   async detail(@Param('id') noticeId: string) {

@@ -21,6 +21,14 @@ export class ChangelogController {
     };
   }
 
+  @Get('create')
+  @Render('changelog/create')
+  async create() {
+    return {
+      headerTitle: '업데이트 변경사항 등록',
+    };
+  }
+
   @Get('/:id')
   @Render('changelog/detail')
   async detail(@Param('id') changelogId: string) {

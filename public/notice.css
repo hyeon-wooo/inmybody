@@ -47,4 +47,6 @@
   font-size: 0.9rem;
   line-height: 1.3rem;
   color: var(--black-secondary);
+
+  white-space: pre-line;
 }

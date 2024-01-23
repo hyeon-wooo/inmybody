@@ -23,7 +23,7 @@ export class NoticeService extends CRUDService<NoticeEntity> {
       where: { fixed: true },
     });
     const notFixed = await this.findMany({
-      take: 5,
+      take: 4,
       select: fields,
       where: { fixed: false },
     });
