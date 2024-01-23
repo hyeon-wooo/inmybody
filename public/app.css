@@ -79,6 +79,7 @@ select {
   border-bottom: 1px solid var(--shadow-gray);
   margin-bottom: 14px;
   transition: all 0.1s linear;
+  border-radius: 0;
 }
 
 input[type='text']:focus,
