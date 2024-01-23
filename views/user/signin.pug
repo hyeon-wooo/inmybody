@@ -4,12 +4,11 @@ block head
 block content
     include ../components/logo
 
-    h3.sign-form-label 로그인
     form#form-signin.flex-col-center
-        input(type='email' placeholder='이메일' name='email' required) 
+        input(type='email' placeholder='이메일' name='email' required style="margin-top: 40px;") 
         input(type='password' placeholder='패스워드' name='password' required minlength='8')
-        button(type='submit' style="margin-bottom: 10px;") 로그인
-        button(onclick='location.href="/signup"') 회원가입
+        button.mainbtn(type='submit' style="margin-bottom: 10px; margin-top: 40px;") 로그인
+        button.mainbtn.mainbtn-nude(onclick='location.href="/signup"') 회원가입
 
     script.
         const $form = document.querySelector('#form-signin');

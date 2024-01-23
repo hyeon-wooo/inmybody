@@ -1,0 +1,17 @@
+extends ../layout
+
+block head
+    link(rel='stylesheet' href='/notice.css')
+
+block content
+    include ../components/header-back
+
+    if notice === null
+        include ../components/alert-wrong-request
+    else
+
+        .notice-detail-head
+            h3= notice.title
+            p= notice.createdAt
+        
+        .notice-detail-content #{notice.content}

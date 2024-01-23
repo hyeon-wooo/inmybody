@@ -6,6 +6,8 @@ import { RecordModule } from './record/record.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { AuthModule } from './auth/auth.module';
+import { NoticeModule } from './notice/notice.module';
+import { ChangelogModule } from './changelog/changelog.module';
 dotenv.config();
 
 @Module({
@@ -23,6 +25,8 @@ dotenv.config();
     UserModule,
     AuthModule,
     RecordModule,
+    NoticeModule,
+    ChangelogModule,
   ],
   controllers: [AppController],
   providers: [AppService],

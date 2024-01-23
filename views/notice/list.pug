@@ -1,0 +1,13 @@
+extends ../layout
+
+block head
+    link(rel='stylesheet' href='/notice.css')
+
+block content
+    include ../components/header-back
+
+    main
+        for notice in notices
+            a.notice-list-item(href='/notice/' + notice.id)
+                p= notice.title
+                img(src='/assets/arrow-right.png')

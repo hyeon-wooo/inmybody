@@ -6,13 +6,13 @@ block content
     include ../components/logo
 
     
-    h3.sign-form-label 회원가입
+    //- h3.sign-form-label 회원가입
     form#form-signup.flex-col-center
-        input(type='email' placeholder='이메일' name='email' required) 
+        input(type='email' placeholder='이메일' name='email' required style="margin-top: 40px;") 
         input(type='password' placeholder='패스워드' name='password' required minlength='8')
         input(type='password' placeholder='패스워드 확인' name='password' required minlength='8')
         input(type='text' placeholder='닉네임' name='name' required minlength='2' maxlength='16')
-        button(type='submit') 회원가입
+        button.mainbtn(type='submit' style="margin-top: 40px;") 회원가입
 
     script.
         const $form = document.querySelector('#form-signup');

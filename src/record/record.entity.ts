@@ -50,6 +50,9 @@ export class RecordEntity extends DefaultEntity {
   @Column('float', { comment: '비만도(%)', default: 0 })
   obesity: number;
 
+  @Column({ nullable: true, comment: '관리자 참고용 메모' })
+  memo: string | null;
+
   @Column()
   userId: string;
 

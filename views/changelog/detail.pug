@@ -1,0 +1,23 @@
+extends ../layout
+
+block head
+    link(rel='stylesheet' href='/notice.css')
+
+block content
+    include ../components/header-back
+
+    if changelog === null
+        include ../components/alert-wrong-request
+    else
+
+        .notice-detail-head
+            h3 version 
+                span(style="color:var(--blue1);")= changelog.versionCode
+            p= changelog.createdAt
+        
+        .notice-detail-content
+            h3(style="color:var(--black-primary);") 업데이트 변경사항
+            ul
+                for item in changelog.content
+                    li= item
+                

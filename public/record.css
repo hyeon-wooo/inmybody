@@ -1,10 +1,30 @@
 #form-record-add {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
+  padding: 0 16px 16px 16px;
+  flex: 1;
+  overflow: auto;
+}
+#form-record-add::-webkit-scrollbar {
+  display: none;
 }
 #form-record-add > input {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+}
+
+#record-graph-main {
+  flex: 1;
+  overflow: auto;
+}
+#record-graph-main::-webkit-scrollbar {
+  display: none;
+}
+
+.canvas-container {
+  padding: 20px 16px;
+}
+
+.canvas-container > h3 {
+  margin-bottom: 10px;
+  color: var(--blue1);
 }
 
 canvas {

@@ -12,6 +12,9 @@ export class UserEntity extends DefaultEntity {
   @Column()
   salt: string;
 
+  @Column({ nullable: true, comment: '관리자 참고용 메모' })
+  memo: string | null;
+
   @Column('int', { comment: 'USR: 1~99, ADM: 100~', default: 1 })
   level: number;
 }

@@ -4,11 +4,8 @@
 }
 
 form {
-  width: calc(100% - 32px);
-  border: 1px solid #aeaeae;
-  border-radius: 7px;
-  padding: 10px;
-  margin: 0 16px;
+  width: 100%;
+  padding: 10px 16px;
 }
 
 form > input {

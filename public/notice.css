@@ -1,0 +1,50 @@
+.notice-list-item {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border-light);
+  padding: 0 16px;
+}
+
+.notice-list-item > p {
+  flex: 1;
+
+  /* 아래 속성들은 2 line ellipsis를 위해 필요한 속성들 */
+  overflow: hidden;
+  white-space: normal;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: keep-all;
+}
+
+.notice-list-item > img {
+  width: 24px;
+  height: 24px;
+  margin-left: 10px;
+}
+
+/* 상세페이지 */
+
+.notice-detail-head {
+  padding: 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.notice-detail-head > h3 {
+  margin-bottom: 20px;
+}
+
+.notice-detail-head > p {
+  font-size: 0.8rem;
+  color: var(--gray-primary);
+}
+
+.notice-detail-content {
+  padding: 16px;
+  font-size: 0.9rem;
+  line-height: 1.3rem;
+  color: var(--black-secondary);
+}

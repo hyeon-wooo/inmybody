@@ -8,12 +8,16 @@ export class RecordController {
   @Get('/register')
   @Render('record/register')
   recordAddPage() {
-    return;
+    return {
+      headerTitle: '인바디 결과 등록',
+    };
   }
 
   @Get('/graph')
   @Render('record/graph')
   recordGraphPage() {
-    return;
+    return {
+      headerTitle: '나의 인바디 변화',
+    };
   }
 }

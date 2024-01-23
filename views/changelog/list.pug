@@ -1,0 +1,14 @@
+extends ../layout
+
+block head
+    link(rel='stylesheet' href='/notice.css')
+
+block content
+    include ../components/header-back
+
+    main
+        for changelog in changelogs
+            a.notice-list-item(href='/changelog/' + changelog.id)
+                p version 
+                    span(style="color:var(--blue1);")= changelog.versionCode
+                img(src='/assets/arrow-right.png')

@@ -2,51 +2,57 @@ extends ../layout
 block head
     link(rel='stylesheet' type='text/css' href='/record.css')
 block content
-    h1 나의 인바디 변화
+    include ../components/header-back
 
-    .canvas-container
+    main#record-graph-main
+        .description-block
+            div
+                p 입력한 인바디 결과의 항목별 추이입니다.
+                p 그래프의 각 꼭지점을 누르면 정확한 수치를 확인할 수 있습니다.
 
-        h3 인바디점수
-        canvas#chart-score
+        .canvas-container
 
-        h3 체중(kg)
-        canvas#chart-weight
+            h3 인바디점수
+            canvas#chart-score
 
-        h3 골격근량(kg)
-        canvas#chart-muscleMass
+            h3 체중(kg)
+            canvas#chart-weight
 
-        h3 체지방량(kg)
-        canvas#chart-fatMass
+            h3 골격근량(kg)
+            canvas#chart-muscleMass
 
-        h3 BMI(kg/m2)
-        canvas#chart-bmi
+            h3 체지방량(kg)
+            canvas#chart-fatMass
 
-        h3 체지방률(kg)
-        canvas#chart-fatPercent
+            h3 BMI(kg/m2)
+            canvas#chart-bmi
 
-        h3 체수분(L)
-        canvas#chart-water
+            h3 체지방률(kg)
+            canvas#chart-fatPercent
 
-        h3 단백질(kg)
-        canvas#chart-protein
+            h3 체수분(L)
+            canvas#chart-water
 
-        h3 무기질(kg)
-        canvas#chart-mineral 
+            h3 단백질(kg)
+            canvas#chart-protein
 
-        h3 복부지방률
-        canvas#chart-waistHipRatio
+            h3 무기질(kg)
+            canvas#chart-mineral 
 
-        h3 내장지방레벨
-        canvas#chart-visceralFatLevel
+            h3 복부지방률
+            canvas#chart-waistHipRatio
 
-        h3 제지방량(kg)
-        canvas#chart-leanBodyMass
+            h3 내장지방레벨
+            canvas#chart-visceralFatLevel
 
-        h3 기초대사량
-        canvas#chart-basalMetabolicRate
+            h3 제지방량(kg)
+            canvas#chart-leanBodyMass
 
-        h3 비만도(%)
-        canvas#chart-obesity
+            h3 기초대사량
+            canvas#chart-basalMetabolicRate
+
+            h3 비만도(%)
+            canvas#chart-obesity
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     script.
