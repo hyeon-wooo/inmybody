@@ -4,7 +4,7 @@ block head
 block content
     include ../components/logo
 
-    form(onsubmit="alert('#1')")#form-signin.flex-col-center
+    form#form-signin.flex-col-center
         input(type='email' placeholder='이메일' name='email' required style="margin-top: 40px;") 
         input(type='password' placeholder='패스워드' name='password' required minlength='8')
         button.mainbtn(type='submit' style="margin-bottom: 10px; margin-top: 40px;") 로그인
@@ -19,7 +19,6 @@ block content
         $form.addEventListener('submit', onSubmit);
 
         function onSubmit(e) {
-            console.log('#1')
             e.preventDefault()
             
             const email = $inputEmail.value

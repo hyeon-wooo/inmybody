@@ -11,7 +11,8 @@ block content
                 p 입력란에 kg이나 %와 같은 단위는 입력하지 않습니다.
 
         label.big(for='input1') 검사일시
-        input#input1(type='date' name='d' required)
+        div
+            input#input1(type='date' name='d' required style="width: 0; min-width: calc(100% - 10px);")
 
         label.big(for='input2') 인바디점수
         input#input2(type='number' name='score' required placeholder='0~110')
@@ -59,6 +60,7 @@ block content
 
     script.
         const $inputs = document.querySelectorAll('input')
+        const $dateInput = document.querySelector('#input1')
 
         function register(e) {
             e.preventDefault()
