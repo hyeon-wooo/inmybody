@@ -8,6 +8,7 @@ import * as dotenv from 'dotenv';
 import { AuthModule } from './auth/auth.module';
 import { NoticeModule } from './notice/notice.module';
 import { ChangelogModule } from './changelog/changelog.module';
+import { UserFcmModule } from './user-fcm/user-fcm.module';
 dotenv.config();
 
 @Module({
@@ -27,6 +28,7 @@ dotenv.config();
     RecordModule,
     NoticeModule,
     ChangelogModule,
+    UserFcmModule,
   ],
   controllers: [AppController],
   providers: [AppService],
