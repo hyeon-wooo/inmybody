@@ -6,12 +6,17 @@ import {
   NotFoundException,
   Post,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiOperation } from '@nestjs/swagger';
-import { SignInDTO, SignUpDTO } from './user.dto';
+import { ChangePasswordDTO, SignInDTO, SignUpDTO } from './user.dto';
 import { AuthService } from 'src/auth/auth.service';
 import { Response } from 'express';
+import { JwtAuthGuard } from 'src/auth/jwt.guard';
+import { RolesGuard } from 'src/auth/role/role.guard';
+import { Roles } from 'src/auth/role/role.decorator';
+import { ERole } from 'src/auth/role/role.enum';
 
 @Controller('api/user')
 export class UserController {
@@ -19,6 +24,18 @@ export class UserController {
     private service: UserService,
     private authService: AuthService,
   ) {}
+
+  // @Post('/password')
+  // // @Roles(ERole.ADM)
+  // // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @ApiOperation({ summary: '비밀번호 변경' })
+  // async changePassword(@Body() body: ChangePasswordDTO) {
+  //   const found = await this.service.findOne({ email: body.email });
+  //   if (!found) throw new HttpException('존재하지 않는 사용자입니다.', 404);
+
+  //   const created = await this.service.changePassword(found, body.password);
+  //   return true;
+  // }
 
   @Post('/signup')
   @ApiOperation({ summary: '회원가입' })

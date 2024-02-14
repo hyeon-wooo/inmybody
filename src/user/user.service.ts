@@ -27,4 +27,11 @@ export class UserService extends CRUDService<UserEntity> {
     });
     return this.repo.save(creating);
   }
+
+  async changePassword(user: UserEntity, password: string) {
+    const { salt } = user;
+    const encryptedPassword = this.authService.hashPassword(password, salt);
+    await this.repo.update(user.id, { password: encryptedPassword });
+    return;
+  }
 }
