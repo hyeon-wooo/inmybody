@@ -10,6 +10,7 @@ import { NoticeModule } from './notice/notice.module';
 import { ChangelogModule } from './changelog/changelog.module';
 import { UserFcmModule } from './user-fcm/user-fcm.module';
 import { QnaModule } from './qna/qna.module';
+import { LogModule } from './log/log.module';
 dotenv.config();
 
 @Module({
@@ -31,6 +32,7 @@ dotenv.config();
     ChangelogModule,
     UserFcmModule,
     QnaModule,
+    LogModule,
   ],
   controllers: [AppController],
   providers: [AppService],

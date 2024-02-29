@@ -5,6 +5,7 @@ import {
   HttpException,
   NotFoundException,
   Post,
+  Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -12,12 +13,13 @@ import { UserService } from './user.service';
 import { ApiOperation } from '@nestjs/swagger';
 import { ChangePasswordDTO, SignInDTO, SignUpDTO } from './user.dto';
 import { AuthService } from 'src/auth/auth.service';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { RolesGuard } from 'src/auth/role/role.guard';
 import { Roles } from 'src/auth/role/role.decorator';
 import { ERole } from 'src/auth/role/role.enum';
 import { UserFcmService } from 'src/user-fcm/user-fcm.service';
+import { LogService } from 'src/log/log.service';
 
 @Controller('api/user')
 export class UserController {
@@ -25,6 +27,7 @@ export class UserController {
     private service: UserService,
     private authService: AuthService,
     private fcmService: UserFcmService,
+    private logService: LogService,
   ) {}
 
   // @Post('/password')
@@ -71,5 +74,19 @@ export class UserController {
     });
 
     return { token: token.access_token };
+  }
+
+  @Post('/logout')
+  @UseGuards(JwtAuthGuard)
+  async logout(@Req() { user }: Request) {
+    this.logService.saveLogout(user.id);
+    return true;
+  }
+
+  @Post('leave')
+  @UseGuards(JwtAuthGuard)
+  async leave(@Req() { user }: Request) {
+    this.service.deleteMany([user.id]);
+    return true;
   }
 }
