@@ -16,12 +16,13 @@ export class UserService extends CRUDService<UserEntity> {
   }
 
   createUser(body: SignUpDTO) {
-    const { password, ...rest } = body;
+    const { password, nickname, ...rest } = body;
     const salt = this.authService.generateSalt(12);
     const encryptedPassword = this.authService.hashPassword(password, salt);
 
     const creating = this.repo.create({
       ...rest,
+      name: nickname,
       password: encryptedPassword,
       salt,
     });

@@ -8,7 +8,6 @@ export class NoticeController {
   constructor(private service: NoticeService) {}
 
   @Get()
-  @Render('notice/list')
   async list() {
     const found = await this.service.findMany({
       select: ['id', 'createdAt', 'title', 'fixed'],
@@ -16,10 +15,18 @@ export class NoticeController {
     });
 
     return {
-      headerTitle: '공지사항',
       notices: found.map((notice) => {
         return { ...notice, createdAt: dateToStr(notice.createdAt) };
       }),
+    };
+  }
+
+  @Get('/:id')
+  async detail(@Param('id') noticeId: string) {
+    const found = await this.service.findOne(noticeId);
+
+    return {
+      notice: found,
     };
   }
 
@@ -28,22 +35,6 @@ export class NoticeController {
   async create() {
     return {
       headerTitle: '공지사항 등록',
-    };
-  }
-
-  @Get('/:id')
-  @Render('notice/detail')
-  async detail(@Param('id') noticeId: string) {
-    const found = await this.service.findOne(noticeId);
-
-    return {
-      headerTitle: '공지사항',
-      notice: found
-        ? {
-            ...found,
-            createdAt: dateToStr(found.createdAt),
-          }
-        : null,
     };
   }
 }

@@ -7,17 +7,13 @@ export class ChangelogController {
   constructor(private service: ChangelogService) {}
 
   @Get()
-  @Render('changelog/list')
   async list() {
     const found = await this.service.findMany({
       select: ['id', 'createdAt', 'versionCode'],
     });
 
     return {
-      headerTitle: '업데이트',
-      changelogs: found.map((changelog) => {
-        return { ...changelog, createdAt: dateToStr(changelog.createdAt) };
-      }),
+      changelogs: found,
     };
   }
 
@@ -30,16 +26,13 @@ export class ChangelogController {
   }
 
   @Get('/:id')
-  @Render('changelog/detail')
   async detail(@Param('id') changelogId: string) {
     const found = await this.service.findOne(changelogId);
 
     return {
-      headerTitle: '업데이트',
       changelog: found
         ? {
             ...found,
-            createdAt: dateToStr(found.createdAt),
             content: found.content.toString().split(';'),
           }
         : null,

@@ -11,4 +11,13 @@ export class UserFcmService extends CRUDService<UserFcmEntity> {
   ) {
     super(repo);
   }
+
+  async register(userId: string, fcm: string) {
+    const already = await this.findMany({ where: { userId, active: true } });
+    if (already.length)
+      await this.updateWithWhere({ userId, active: true }, { active: false });
+
+    await this.create({ userId, token: fcm });
+    return;
+  }
 }

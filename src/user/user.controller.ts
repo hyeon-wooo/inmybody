@@ -17,12 +17,14 @@ import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { RolesGuard } from 'src/auth/role/role.guard';
 import { Roles } from 'src/auth/role/role.decorator';
 import { ERole } from 'src/auth/role/role.enum';
+import { UserFcmService } from 'src/user-fcm/user-fcm.service';
 
 @Controller('api/user')
 export class UserController {
   constructor(
     private service: UserService,
     private authService: AuthService,
+    private fcmService: UserFcmService,
   ) {}
 
   // @Post('/password')
@@ -58,6 +60,8 @@ export class UserController {
     const { password, salt } = user;
     if (!this.authService.validateUser(password, salt, body.password))
       throw new NotFoundException('로그인 정보와 일치하는 사용자가 없습니다.');
+
+    await this.fcmService.register(user.id, body.fcm);
 
     const { id, level, name } = user;
     const token = await this.authService.generateToken({

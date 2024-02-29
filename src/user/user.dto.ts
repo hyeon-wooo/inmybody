@@ -5,7 +5,7 @@ export class SignUpDTO {
   email: string;
 
   @ApiProperty({ description: '' })
-  name: string;
+  nickname: string;
 
   @ApiProperty({ description: '입력한 비밀번호' })
   password: string;
@@ -17,6 +17,9 @@ export class SignInDTO {
 
   @ApiProperty({ description: '입력한 비밀번호' })
   password: string;
+
+  @ApiProperty({ description: 'FCM' })
+  fcm: string;
 }
 
 export class ChangePasswordDTO extends PickType(SignUpDTO, [
