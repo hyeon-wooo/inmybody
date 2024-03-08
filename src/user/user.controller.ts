@@ -21,7 +21,7 @@ import { ERole } from 'src/auth/role/role.enum';
 import { UserFcmService } from 'src/user-fcm/user-fcm.service';
 import { LogService } from 'src/log/log.service';
 
-@Controller('api/user')
+@Controller('user')
 export class UserController {
   constructor(
     private service: UserService,
@@ -30,17 +30,17 @@ export class UserController {
     private logService: LogService,
   ) {}
 
-  // @Post('/password')
-  // // @Roles(ERole.ADM)
-  // // @UseGuards(JwtAuthGuard, RolesGuard)
-  // @ApiOperation({ summary: '비밀번호 변경' })
-  // async changePassword(@Body() body: ChangePasswordDTO) {
-  //   const found = await this.service.findOne({ email: body.email });
-  //   if (!found) throw new HttpException('존재하지 않는 사용자입니다.', 404);
+  @Post('/password')
+  // @Roles(ERole.ADM)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiOperation({ summary: '비밀번호 변경' })
+  async changePassword(@Body() body: ChangePasswordDTO) {
+    const found = await this.service.findOne({ email: body.email });
+    if (!found) throw new HttpException('존재하지 않는 사용자입니다.', 404);
 
-  //   const created = await this.service.changePassword(found, body.password);
-  //   return true;
-  // }
+    const created = await this.service.changePassword(found, body.password);
+    return true;
+  }
 
   @Post('/signup')
   @ApiOperation({ summary: '회원가입' })
@@ -83,7 +83,7 @@ export class UserController {
     return true;
   }
 
-  @Post('leave')
+  @Post('/leave')
   @UseGuards(JwtAuthGuard)
   async leave(@Req() { user }: Request) {
     this.service.deleteMany([user.id]);
