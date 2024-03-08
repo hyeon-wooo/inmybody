@@ -18,11 +18,11 @@ export class QnaEntity extends DefaultEntity {
   @Column('blob', { comment: '문의내용 본문' })
   content: string;
 
-  @Column('blob', { comment: '답변내용' })
-  answer: string;
+  @Column('blob', { comment: '답변내용', nullable: true })
+  answer: string | null;
 
-  @Column({ comment: '답변일시' })
-  answeredAt: Date;
+  @Column('datetime', { comment: '답변일시', nullable: true })
+  answeredAt: Date | null;
 
   @Column({ comment: '사용자ID' })
   userId: string;

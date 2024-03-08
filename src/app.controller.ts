@@ -37,26 +37,9 @@ export class AppController {
     };
   }
 
-  @Get('')
-  @Render('index')
-  @UseGuards(JwtPassGuard)
-  async getHlo(@Req() { user }: Request) {
-    const notices = await this.noticeService.getHomeContents();
-    const changelogs = await this.changelogService.getHomeContents();
-    return {
-      notices: notices.map((notice) => {
-        return {
-          ...notice,
-          createdAt: dateToStr(notice.createdAt),
-        };
-      }),
-      changelogs: changelogs.map((changelog) => {
-        return {
-          ...changelog,
-          createdAt: dateToStr(changelog.createdAt),
-        };
-      }),
-    };
+  @Get()
+  async timestamp() {
+    return { ts: Date.now() };
   }
 
   @Get('signin')

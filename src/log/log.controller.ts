@@ -16,6 +16,12 @@ export class LogController {
     @Req() { user }: Request,
     @LaunchID() launch: TLaunchInfo,
   ) {
-    this.service.saveScreenHistory(user.id, body.screenName, launch);
+    this.service.saveScreenHistory(
+      user?.id ?? 'unknown',
+      body.screenName,
+      launch,
+    );
+
+    return true;
   }
 }
