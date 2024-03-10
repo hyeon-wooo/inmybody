@@ -15,10 +15,14 @@ import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { Request } from 'express';
 import { LaunchID, TLaunchInfo } from 'src/common/aa';
 import { ApplyQnaDTO } from './qna.dto';
+import { LogService } from 'src/log/log.service';
 
 @Controller('qna')
 export class QnaController {
-  constructor(private service: QnaService) {}
+  constructor(
+    private service: QnaService,
+    private logService: LogService,
+  ) {}
 
   @Get()
   @UseGuards(JwtAuthGuard)
@@ -39,6 +43,9 @@ export class QnaController {
     @Req() { user }: Request,
     @LaunchID() launch: TLaunchInfo,
   ) {
+    // log 저장
+    this.logService.saveQnaDetail(qnaId, user.id, launch.launchId);
+
     const found = await this.service.findOne({ userId: user.id, id: qnaId });
     if (!found) throw new HttpException('존재하지 않는 문의입니다.', 404);
 

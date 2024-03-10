@@ -1,4 +1,12 @@
-import { Controller, Get, Render, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Render,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { JwtPassGuard } from './auth/jwt.guard';
 import { Request } from 'express';
@@ -6,6 +14,8 @@ import { UserService } from './user/user.service';
 import { NoticeService } from './notice/notice.service';
 import { dateToStr } from './lib/utils/datetime';
 import { ChangelogService } from './changelog/changelog.service';
+import { LogService } from './log/log.service';
+import { LaunchID, TLaunchInfo } from './common/aa';
 
 @Controller()
 export class AppController {
@@ -14,6 +24,7 @@ export class AppController {
     private userService: UserService,
     private noticeService: NoticeService,
     private changelogService: ChangelogService,
+    private logService: LogService,
   ) {}
 
   @Get('main')

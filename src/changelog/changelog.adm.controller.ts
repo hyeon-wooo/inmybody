@@ -6,13 +6,13 @@ import { Roles } from 'src/auth/role/role.decorator';
 import { ERole } from 'src/auth/role/role.enum';
 import { RolesGuard } from 'src/auth/role/role.guard';
 
-@Controller({ path: 'api/changelog' })
-export class ChangelogApiControlller {
+@Controller({ path: 'adm/changelog' })
+@Roles(ERole.ADM)
+@UseGuards(JwtAuthGuard)
+export class ChangelogAdmControlller {
   constructor(private service: ChangelogService) {}
 
   @Post()
-  @Roles(ERole.ADM)
-  @UseGuards(JwtAuthGuard, RolesGuard)
   async create(@Body() body: CreateChangelogDTO) {
     this.service.create(body);
   }

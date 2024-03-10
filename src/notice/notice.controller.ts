@@ -1,11 +1,27 @@
-import { Body, Controller, Get, Param, Post, Render } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Render,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { NoticeService } from './notice.service';
 import { CreateNoticeDTO } from './notice.dto';
 import { dateToStr } from 'src/lib/utils/datetime';
+import { LogService } from 'src/log/log.service';
+import { JwtPassGuard } from 'src/auth/jwt.guard';
+import { Request } from 'express';
+import { LaunchID, TLaunchInfo } from 'src/common/aa';
 
 @Controller('notice')
 export class NoticeController {
-  constructor(private service: NoticeService) {}
+  constructor(
+    private service: NoticeService,
+    private logService: LogService,
+  ) {}
 
   @Get()
   async list() {
@@ -22,7 +38,16 @@ export class NoticeController {
   }
 
   @Get('/:id')
-  async detail(@Param('id') noticeId: string) {
+  @UseGuards(JwtPassGuard)
+  async detail(
+    @Param('id') noticeId: string,
+    @Req() { user }: Request,
+    @LaunchID() launch: TLaunchInfo,
+  ) {
+    // log 저장
+    if (user)
+      this.logService.saveNoticeDetail(noticeId, user.id, launch.launchId);
+
     const found = await this.service.findOne(noticeId);
 
     return {

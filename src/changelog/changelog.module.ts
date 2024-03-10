@@ -3,11 +3,12 @@ import { ChangelogController } from './changelog.controller';
 import { ChangelogService } from './changelog.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ChangelogEntity } from './changelog.entity';
-import { ChangelogApiControlller } from './changelog.api.controller';
+import { ChangelogAdmControlller } from './changelog.adm.controller';
+import { LogModule } from 'src/log/log.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ChangelogEntity])],
-  controllers: [ChangelogController, ChangelogApiControlller],
+  imports: [TypeOrmModule.forFeature([ChangelogEntity]), LogModule],
+  controllers: [ChangelogController, ChangelogAdmControlller],
   providers: [ChangelogService],
   exports: [ChangelogService],
 })
