@@ -12,7 +12,7 @@ export class NotificationService {
       this.app = admin.initializeApp(
         {
           credential: admin.credential.cert(
-            join(process.cwd(), 'imb_firebase.json'),
+            join(process.cwd(), process.env.FIREBASE_SDK_KEY_FILE_NAME),
           ),
         },
         'main-firebase',
