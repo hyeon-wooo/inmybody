@@ -2,17 +2,21 @@ import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import { join } from 'path';
 import { IPushPayload } from './notification.interface';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class NotificationService {
   private app: admin.app.App;
 
-  constructor() {
+  constructor(private readonly configService: ConfigService) {
     if (admin.apps.length === 0)
       this.app = admin.initializeApp(
         {
           credential: admin.credential.cert(
-            join(process.cwd(), process.env.FIREBASE_SDK_KEY_FILE_NAME),
+            join(
+              process.cwd(),
+              configService.get('FIREBASE_SDK_KEY_FILE_NAME'),
+            ),
           ),
         },
         'main-firebase',

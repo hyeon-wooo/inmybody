@@ -12,19 +12,15 @@ import { UserFcmModule } from './user-fcm/user-fcm.module';
 import { QnaModule } from './qna/qna.module';
 import { LogModule } from './log/log.module';
 import { NotificationModule } from './notification/notification.module';
-dotenv.config();
+import { ConfigModule } from '@nestjs/config';
+import { DBConfigService } from './config/db';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      username: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      host: process.env.DB_HOST,
-      database: process.env.DB_NAME,
-      port: process.env.DB_PORT,
-      synchronize: true,
-      entities: ['dist/**/*.entity.js'],
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: DBConfigService,
     }),
     UserModule,
     AuthModule,

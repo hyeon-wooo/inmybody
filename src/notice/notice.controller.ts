@@ -48,7 +48,7 @@ export class NoticeController {
     if (user)
       this.logService.saveNoticeDetail(noticeId, user.id, launch.launchId);
 
-    const found = await this.service.findOne(noticeId);
+    const found = await this.service.findOne({ id: noticeId });
 
     return {
       notice: found,

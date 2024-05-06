@@ -47,7 +47,7 @@ export class ChangelogController {
         launch.launchId,
       );
 
-    const found = await this.service.findOne(changelogId);
+    const found = await this.service.findOne({ id: changelogId });
 
     return {
       changelog: found

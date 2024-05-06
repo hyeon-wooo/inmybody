@@ -1,18 +1,23 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthService } from './auth.service';
 import { UserModule } from 'src/user/user.module';
 import { JwtAuthGuard } from './jwt.guard';
 import { RolesGuard } from './role/role.guard';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     PassportModule,
-    JwtModule.register({
-      secret: jwtConstants.secret,
+    ConfigModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get('JWT_SECRET'),
+      }),
     }),
     // UserModule,
   ],

@@ -18,7 +18,7 @@ export class UserFcmService extends CRUDService<UserFcmEntity> {
       // 이미 활성화된 fcm이 다시 들어오면 무시
       if (fcm === already.find((a) => a.active).token) return;
 
-      await this.updateWithWhere({ userId, active: true }, { active: false });
+      await this.update({ userId, active: true }, { active: false });
     }
 
     await this.create({ userId, token: fcm });

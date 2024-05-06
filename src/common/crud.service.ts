@@ -1,7 +1,7 @@
 import {
   DeepPartial,
-  FindConditions,
   FindManyOptions,
+  FindOptionsWhere,
   In,
   Repository,
 } from 'typeorm';
@@ -21,12 +21,9 @@ export abstract class CRUDService<TEntity> {
   }
 
   findOne(
-    condition: string | FindConditions<TEntity>,
+    condition: FindOptionsWhere<TEntity>,
     relations?: string[],
   ): Promise<TEntity> {
-    if (typeof condition === 'string')
-      return this.repo.findOne(condition, { relations });
-
     return this.repo.findOne({ where: condition, relations });
   }
 
@@ -53,8 +50,11 @@ export abstract class CRUDService<TEntity> {
     return created;
   }
 
-  async update(id: string, data: DeepPartial<TEntity>): Promise<TEntity> {
-    const found = await this.repo.findOne(id);
+  async update(
+    condition: FindOptionsWhere<TEntity>,
+    data: DeepPartial<TEntity>,
+  ): Promise<TEntity> {
+    const found = await this.repo.findOne(condition);
     if (!found) return null;
     const updating = { ...found, ...data };
     return this.repo.save(updating);
@@ -79,13 +79,6 @@ export abstract class CRUDService<TEntity> {
     );
 
     return this.repo.save(mergedEntities);
-  }
-
-  async updateWithWhere(
-    where: FindConditions<TEntity>,
-    changed: QueryDeepPartialEntity<TEntity>,
-  ) {
-    return this.repo.update(where, changed);
   }
 
   async save(entities: DeepPartial<TEntity>[]) {
