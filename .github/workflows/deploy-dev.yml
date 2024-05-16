@@ -1,13 +1,13 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Auto Deploy
+name: Auto Deploy (dev)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "dev" ]
 
 jobs:
   build_and_deploy:
@@ -32,41 +32,41 @@ jobs:
     - name: Transfer package.json
       uses: appleboy/scp-action@master
       with:
-        username: ${{ secrets.SSH_USER }}
-        host: ${{ secrets.SSH_HOST }}
-        key: ${{ secrets.SSH_KEY }}
-        port: ${{ secrets.SSH_PORT }}
+        username: ${{ secrets.SSH_USER_DEV }}
+        host: ${{ secrets.SSH_HOST_DEV }}
+        key: ${{ secrets.SSH_KEY_DEV }}
+        port: ${{ secrets.SSH_PORT_DEV }}
         source: "./package.json"
-        target: ${{ secrets.DEPLOY_TARGET }}
+        target: ${{ secrets.DEPLOY_TARGET_DEV }}
 
     - name: Transfer yarn.lock
       uses: appleboy/scp-action@master
       with:
-        username: ${{ secrets.SSH_USER }}
-        host: ${{ secrets.SSH_HOST }}
-        key: ${{ secrets.SSH_KEY }}
+        username: ${{ secrets.SSH_USER_DEV }}
+        host: ${{ secrets.SSH_HOST_DEV }}
+        key: ${{ secrets.SSH_KEY_DEV }}
         source: "./yarn.lock"
-        target: ${{ secrets.DEPLOY_TARGET }}
+        target: ${{ secrets.DEPLOY_TARGET_DEV }}
 
     - name: Transfer build output
       uses: appleboy/scp-action@master
       with:
-        username: ${{ secrets.SSH_USER }}
-        host: ${{ secrets.SSH_HOST }}
-        key: ${{ secrets.SSH_KEY }}
-        port: ${{ secrets.SSH_PORT }}
+        username: ${{ secrets.SSH_USER_DEV }}
+        host: ${{ secrets.SSH_HOST_DEV }}
+        key: ${{ secrets.SSH_KEY_DEV }}
+        port: ${{ secrets.SSH_PORT_DEV }}
         source: "./dist"
-        target: ${{ secrets.DEPLOY_TARGET }}
+        target: ${{ secrets.DEPLOY_TARGET_DEV }}
 
     - name: Execute Server Init Script
       uses: appleboy/ssh-action@master
       with:
-        username: ${{ secrets.SSH_USER }}
-        host: ${{ secrets.SSH_HOST }}
-        key: ${{ secrets.SSH_KEY }}
-        port: ${{ secrets.SSH_PORT }}
+        username: ${{ secrets.SSH_USER_DEV }}
+        host: ${{ secrets.SSH_HOST_DEV }}
+        key: ${{ secrets.SSH_KEY_DEV }}
+        port: ${{ secrets.SSH_PORT_DEV }}
         script_stop: true
-        script: cd ${{ secrets.DEPLOY_TARGET }} && yarn && yarn restart
+        script: cd ${{ secrets.DEPLOY_TARGET_DEV }} && yarn && yarn restart
 
     
 
