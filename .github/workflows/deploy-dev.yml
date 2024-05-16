@@ -66,4 +66,4 @@ jobs:
           key: ${{ secrets.SSH_KEY_DEV }}
           port: ${{ secrets.SSH_PORT_DEV }}
           script_stop: true
-          script: cd ${{ secrets.DEPLOY_TARGET_DEV }} && yarn && yarn restart
+          script: cd /home/hyeonwoo/inmybody && yarn && yarn restart
