@@ -5,13 +5,12 @@ name: Auto Deploy (dev)
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: ['dev']
   pull_request:
-    branches: [ "dev" ]
+    branches: ['dev']
 
 jobs:
   build_and_deploy:
-
     runs-on: ubuntu-22.04
 
     strategy:
@@ -19,57 +18,52 @@ jobs:
         node-version: [18.x]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm i -g yarn
-    - run: yarn
-    - run: yarn build
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm i -g yarn
+      - run: yarn
+      - run: yarn build
 
-    - name: Transfer package.json
-      uses: appleboy/scp-action@master
-      with:
-        username: ${{ secrets.SSH_USER_DEV }}
-        host: ${{ secrets.SSH_HOST_DEV }}
-        key: ${{ secrets.SSH_KEY_DEV }}
-        port: ${{ secrets.SSH_PORT_DEV }}
-        source: "./package.json"
-        target: ${{ secrets.DEPLOY_TARGET_DEV }}
+      - name: Transfer package.json
+        uses: appleboy/scp-action@master
+        with:
+          username: ${{ secrets.SSH_USER_DEV }}
+          host: ${{ secrets.SSH_HOST_DEV }}
+          key: ${{ secrets.SSH_KEY_DEV }}
+          port: ${{ secrets.SSH_PORT_DEV }}
+          source: './package.json'
+          target: ${{ secrets.DEPLOY_TARGET_DEV }}
 
-    - name: Transfer yarn.lock
-      uses: appleboy/scp-action@master
-      with:
-        username: ${{ secrets.SSH_USER_DEV }}
-        host: ${{ secrets.SSH_HOST_DEV }}
-        key: ${{ secrets.SSH_KEY_DEV }}
-        source: "./yarn.lock"
-        target: ${{ secrets.DEPLOY_TARGET_DEV }}
+      - name: Transfer yarn.lock
+        uses: appleboy/scp-action@master
+        with:
+          username: ${{ secrets.SSH_USER_DEV }}
+          host: ${{ secrets.SSH_HOST_DEV }}
+          key: ${{ secrets.SSH_KEY_DEV }}
+          port: ${{ secrets.SSH_PORT_DEV }}
+          source: './yarn.lock'
+          target: ${{ secrets.DEPLOY_TARGET_DEV }}
 
-    - name: Transfer build output
-      uses: appleboy/scp-action@master
-      with:
-        username: ${{ secrets.SSH_USER_DEV }}
-        host: ${{ secrets.SSH_HOST_DEV }}
-        key: ${{ secrets.SSH_KEY_DEV }}
-        port: ${{ secrets.SSH_PORT_DEV }}
-        source: "./dist"
-        target: ${{ secrets.DEPLOY_TARGET_DEV }}
+      - name: Transfer build output
+        uses: appleboy/scp-action@master
+        with:
+          username: ${{ secrets.SSH_USER_DEV }}
+          host: ${{ secrets.SSH_HOST_DEV }}
+          key: ${{ secrets.SSH_KEY_DEV }}
+          port: ${{ secrets.SSH_PORT_DEV }}
+          source: './dist'
+          target: ${{ secrets.DEPLOY_TARGET_DEV }}
 
-    - name: Execute Server Init Script
-      uses: appleboy/ssh-action@master
-      with:
-        username: ${{ secrets.SSH_USER_DEV }}
-        host: ${{ secrets.SSH_HOST_DEV }}
-        key: ${{ secrets.SSH_KEY_DEV }}
-        port: ${{ secrets.SSH_PORT_DEV }}
-        script_stop: true
-        script: cd ${{ secrets.DEPLOY_TARGET_DEV }} && yarn && yarn restart
-
-    
-
-    
-        
-
+      - name: Execute Server Init Script
+        uses: appleboy/ssh-action@master
+        with:
+          username: ${{ secrets.SSH_USER_DEV }}
+          host: ${{ secrets.SSH_HOST_DEV }}
+          key: ${{ secrets.SSH_KEY_DEV }}
+          port: ${{ secrets.SSH_PORT_DEV }}
+          script_stop: true
+          script: cd ${{ secrets.DEPLOY_TARGET_DEV }} && yarn && yarn restart
