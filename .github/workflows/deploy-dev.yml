@@ -48,6 +48,26 @@ jobs:
           source: './yarn.lock'
           target: ${{ secrets.DEPLOY_TARGET_DEV }}
 
+      - name: Transfer public directory
+        uses: appleboy/scp-action@master
+        with:
+          username: ${{ secrets.SSH_USER_DEV }}
+          host: ${{ secrets.SSH_HOST_DEV }}
+          key: ${{ secrets.SSH_KEY_DEV }}
+          port: ${{ secrets.SSH_PORT_DEV }}
+          source: './public'
+          target: ${{ secrets.DEPLOY_TARGET_DEV }}
+
+      - name: Transfer views directory
+        uses: appleboy/scp-action@master
+        with:
+          username: ${{ secrets.SSH_USER_DEV }}
+          host: ${{ secrets.SSH_HOST_DEV }}
+          key: ${{ secrets.SSH_KEY_DEV }}
+          port: ${{ secrets.SSH_PORT_DEV }}
+          source: './views'
+          target: ${{ secrets.DEPLOY_TARGET_DEV }}
+
       - name: Transfer build output
         uses: appleboy/scp-action@master
         with:
